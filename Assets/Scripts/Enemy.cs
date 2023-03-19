@@ -3,8 +3,10 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    public GameObject deathEffect;
     public float speed = 10f;
-
+    public int health = 100;
+    public int value = 50;
     private Transform target;
     private int wavepointIndex = 0;
 
@@ -28,10 +30,34 @@ public class Enemy : MonoBehaviour
     {
         if (wavepointIndex >= Waypoints.waypoints.Length - 1)
         {
-            Destroy(gameObject);
+            EndPath();
             return;
         }
         wavepointIndex++;
         target = Waypoints.waypoints[wavepointIndex];
+    }
+
+    public void TakeDamage(int amount)
+    {
+        health -= amount;
+
+        if (health <= 0)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        PlayerStats.Money += value;
+        GameObject effect = Instantiate(deathEffect, transform.position, Quaternion.identity);
+        Destroy(gameObject);
+        Destroy(effect,5f);
+    }
+
+    void EndPath()
+    {
+        PlayerStats.Lives--;
+        Destroy(gameObject);
     }
 }
