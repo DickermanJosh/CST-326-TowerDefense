@@ -6,7 +6,8 @@ using UnityEngine.Serialization;
 public class BuildManager : MonoBehaviour
 {
     public static BuildManager instance;
-
+    private TurretBlueprint turretToBuild;
+    public GameObject buildEffect;
     private void Awake()
     {
         if (instance != null)
@@ -16,11 +17,8 @@ public class BuildManager : MonoBehaviour
         }
         instance = this;
     }
+    
 
-    public GameObject standardTurretPrefab;
-    private TurretBlueprint turretToBuild;
-    public GameObject missileLauncherPrefab;
-    public GameObject buildEffect;
 
     public bool CanBuild => turretToBuild != null;
     public bool HasMoney => PlayerStats.Money >= turretToBuild.cost;
