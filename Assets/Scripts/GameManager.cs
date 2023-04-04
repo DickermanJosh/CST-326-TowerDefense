@@ -1,22 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    private bool gameEnded = false;
-    // Start is called before the first frame update
-    void Start()
+    public static bool gameIsOver; 
+    public GameObject gameOverUI;
+    public GameObject completeLevelUI;
+    private void Start()
     {
-        
+        gameIsOver = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(gameEnded)
+        if(gameIsOver)
             return;
+
         if (PlayerStats.Lives <= 0)
         {
             EndGame();
@@ -25,7 +25,15 @@ public class GameManager : MonoBehaviour
 
     private void EndGame()
     {
-        gameEnded = true;
+        gameIsOver = true;
         Debug.Log("Game Over");
+        gameOverUI.SetActive(true);
     }
+
+    public void WinLevel()
+    {
+        gameIsOver = true;
+        completeLevelUI.SetActive(true);
+    }
+    
 }
