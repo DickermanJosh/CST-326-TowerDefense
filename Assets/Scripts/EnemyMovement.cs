@@ -1,8 +1,26 @@
+using System;
 using UnityEngine;
+using UnityEngine.AI;
 [RequireComponent(typeof(Enemy))]
 public class EnemyMovement : MonoBehaviour
 {
-    private Transform target;
+    [SerializeField] private NavMeshAgent agent;
+    [SerializeField] private Vector3 destination = new Vector3(70f,2.5f,-70f);
+    private void Start()
+    {
+        agent.SetDestination(destination);
+    }
+
+    private void Update()
+    {
+        if (transform.position != destination) return;
+        PlayerStats.Lives--;
+        Destroy(gameObject);
+        WaveSpawner.enemiesAlive--;
+
+    }
+
+    /*private Transform target;
     private int wavepointIndex = 0;
     private Enemy enemy;
     private void Start()
@@ -10,6 +28,7 @@ public class EnemyMovement : MonoBehaviour
         enemy = GetComponent<Enemy>();
         target = Waypoints.waypoints[0];
     }
+    
     
     private void Update()
     {
@@ -39,5 +58,5 @@ public class EnemyMovement : MonoBehaviour
         PlayerStats.Lives--;
         Destroy(gameObject);
         WaveSpawner.enemiesAlive--;
-    }
+    }*/
 }
